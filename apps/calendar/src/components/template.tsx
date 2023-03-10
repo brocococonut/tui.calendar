@@ -32,7 +32,9 @@ export function Template({ template, param, as: tagName = 'div' }: Props) {
           __html: sanitize(htmlOrVnode),
         },
       })
-    : cloneElement(htmlOrVnode, {
-        className: `${htmlOrVnode.props.className ?? ''} ${cls(`template-${template}`)}`,
-      });
+    : htmlOrVnode instanceof HTMLElement
+      ? htmlOrVnode.cloneNode()
+      : cloneElement(htmlOrVnode, {
+          className: `${htmlOrVnode.props.className ?? ''} ${cls(`template-${template}`)}`,
+        });
 }
